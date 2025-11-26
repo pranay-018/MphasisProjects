@@ -1,0 +1,31 @@
+1. Customer → Meter
+
+One Customer has Many Meters
+
+Meter.CustomerId → Customer.CustomerId
+
+ON DELETE CASCADE
+
+2. Meter → ElectricityUsage
+
+One Meter has Many Usage Records
+
+ElectricityUsage.MeterId → Meter.MeterId
+
+ON DELETE CASCADE
+
+3. Meter → Bill
+
+One Meter has Many Bills
+
+Bill.MeterId → Meter.MeterId
+
+ON DELETE CASCADE
+
+4. Bill → Payment
+
+One Bill has Many Payments
+
+Payment.BillId → Bill.BillId
+
+ON DELETE CASCADE
