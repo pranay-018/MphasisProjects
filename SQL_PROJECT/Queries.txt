@@ -1,0 +1,179 @@
+create database power_consumption_tracker;
+
+
+use power_consumption_tracker;
+
+
+
+
+create 	table customers(
+	customerId int auto_increment primary key,
+    customerName varchar(50) not null,
+    customerAddress varchar(100) not null,
+    CustomerPhnNumber varchar(20) not null,
+    Email varchar(50) unique
+    );
+
+
+alter table customers auto_increment = 100;
+
+
+INSERT INTO customers (customerName, customerAddress, CustomerPhnNumber, email) VALUES
+('Amit Kumar', 'Hyderabad', '9876543210', 'amit.kumar@gmail.com'),
+('Neha Sharma', 'Mumbai', '9123456780', 'neha.sharma@gmail.com'),
+('Ravi Patel', 'Bengaluru', '9988776655', 'ravi.patel@gmail.com'),
+('Sneha Reddy', 'Chennai', '9090909090', 'sneha.reddy@gmail.com'),
+('Karthik Varma', 'Delhi', '9911223344', 'karthik.varma@gmail.com'),
+('Priya Nair', 'Kochi', '9000001111', 'priya.nair@gmail.com'),
+('Sanjay Gupta', 'Pune', '8888887777', 'sanjay.gupta@gmail.com'),
+('Meena Joshi', 'Jaipur', '9123459876', 'meena.joshi@gmail.com'),
+('Ajay Singh', 'Lucknow', '9994443332', 'ajay.singh@gmail.com'),
+('Divya Rao', 'Vijayawada', '8776655443', 'divya.rao@gmail.com'),
+('Rohan Das', 'Kolkata', '9099887766', 'rohan.das@gmail.com'),
+('Lakshmi Menon', 'Trivandrum', '9123498765', 'lakshmi.menon@gmail.com'),
+('Harsha Teja', 'Vizag', '9876123450', 'harsha.teja@gmail.com'),
+('Farhan Ali', 'Hyderabad', '9988223344', 'farhan.ali@gmail.com'),
+('Ritika Kapoor', 'Gurgaon', '9001122334', 'ritika.kapoor@gmail.com');
+
+customerId,    customerName, 	customerAddress, CustomerPhnNumber,	 	Email
+100		Amit Kumar	Hyderabad		9876543210		amit.kumar@gmail.com
+101		Neha Sharma	Mumbai			9123456780		neha.sharma@gmail.com
+102		Ravi Patel	Bengaluru		9988776655		ravi.patel@gmail.com
+103		Sneha Reddy	Chennai			9090909090		sneha.reddy@gmail.com
+104		Karthik Varma	Delhi			9911223344		karthik.varma@gmail.com
+105		Priya Nair	Kochi			9000001111		priya.nair@gmail.com
+106		Sanjay Gupta	Pune			8888887777		sanjay.gupta@gmail.com
+107		Meena Joshi	Jaipur			9123459876		meena.joshi@gmail.com
+108		Ajay Singh	Lucknow			9994443332		ajay.singh@gmail.com
+109		Divya Rao	Vijayawada		8776655443		divya.rao@gmail.com
+110		Rohan Das	Kolkata			9099887766		rohan.das@gmail.com
+111		Lakshmi Menon	Trivandrum		9123498765		lakshmi.menon@gmail.com
+112		Harsha Teja	Vizag			9876123450		harsha.teja@gmail.com
+113		Farhan Ali	Hyderabad		9988223344		farhan.ali@gmail.com
+114		Ritika Kapoor	Gurgaon			9001122334		ritika.kapoor@gmail.com
+
+
+
+create table meter(
+meterId int auto_increment primary key,
+customerId int not null,
+installationDate Date not null,
+last_reading_date Date not null,
+foreign key (customerId) references customers(customerId)
+on delete cascade
+);
+
+
+alter table meter auto_increment = 200;
+
+
+
+INSERT INTO Meter (customerId, installationDate, last_reading_date) VALUES
+(100, '2023-02-10', '2025-01-15'),
+(101, '2024-05-01', '2025-01-16'),
+(102, '2022-11-20', '2025-01-12'),
+(103, '2023-09-15', '2025-01-10'),
+(104, '2024-01-25', '2025-01-14'),
+(105, '2024-08-18', '2025-01-17'),
+(106, '2023-12-12', '2025-01-13'),
+(107, '2022-03-05', '2025-01-11'),
+(108, '2023-07-07', '2025-01-09'),
+(109, '2024-03-15', '2025-01-18'),
+(110, '2023-04-20', '2025-01-19'),
+(111, '2024-06-10', '2025-01-20'),
+(112, '2022-12-30', '2025-01-21'),
+(113, '2023-10-05', '2025-01-22'),
+(114, '2024-02-18', '2025-01-23');
+
+
+
+
+CREATE TABLE ElectricityUsage (
+    usageId INT PRIMARY KEY AUTO_INCREMENT,
+    meterId INT NOT NULL,
+    readingDate DATE NOT NULL,
+    usage_units DECIMAL(10,2) check(usage_units>=0) NOT NULL,
+    FOREIGN KEY (meterId) REFERENCES Meter(meterId) ON DELETE CASCADE
+);
+
+ALTER TABLE ElectricityUsage AUTO_INCREMENT = 300;
+
+
+
+INSERT INTO ElectricityUsage (meterId, readingDate, usage_units) VALUES
+(200, '2025-01-15', 55.00),
+(201, '2025-01-16', 48.50),
+(202, '2025-01-12', 70.00),
+(203, '2025-01-10', 40.00),
+(204, '2025-01-14', 62.00),
+(205, '2025-01-17', 90.00),
+(206, '2025-01-13', 35.00),
+(207, '2025-01-11', 25.00),
+(208, '2025-01-09', 58.00),
+(209, '2025-01-18', 85.00),
+(210, '2025-01-19', 45.50),
+(211, '2025-01-20', 77.00),
+(212, '2025-01-21', 33.00),
+(213, '2025-01-22', 66.00),
+(214, '2025-01-23', 59.00);
+
+
+
+CREATE TABLE Bill (
+    billId INT AUTO_INCREMENT PRIMARY KEY,
+    meterId INT NOT NULL,
+    billDate DATE NOT NULL,
+    amount_due DECIMAL(10,2) NOT NULL CHECK (amount_due >= 0),
+    due_date DATE NOT NULL,
+    paid INT(1) NOT NULL DEFAULT 0,
+    FOREIGN KEY (meterId) REFERENCES Meter(meterId) ON DELETE CASCADE
+);
+
+ALTER TABLE Bill AUTO_INCREMENT = 400;
+
+
+INSERT INTO Bill (meterId, billDate, amount_due, due_date, paid) VALUES
+(200, '2025-01-20', 550.00, '2025-02-10', 0),
+(201, '2025-01-21', 480.00, '2025-02-11', 1),
+(202, '2025-01-18', 700.00, '2025-02-08', 0),
+(203, '2025-01-16', 400.00, '2025-02-06', 0),
+(204, '2025-01-19', 620.00, '2025-02-09', 1),
+(205, '2025-01-22', 900.00, '2025-02-12', 0),
+(206, '2025-01-17', 350.00, '2025-02-07', 0),
+(207, '2025-01-15', 250.00, '2025-02-05', 1),
+(208, '2025-01-14', 580.00, '2025-02-04', 0),
+(209, '2025-01-23', 850.00, '2025-02-13', 1),
+(210, '2025-01-24', 460.00, '2025-02-14', 0),
+(211, '2025-01-25', 770.00, '2025-02-15', 0),
+(212, '2025-01-26', 330.00, '2025-02-16', 1),
+(213, '2025-01-27', 660.00, '2025-02-17', 0),
+(214, '2025-01-28', 590.00, '2025-02-18', 0);
+
+
+
+
+CREATE TABLE Payment (
+    paymentId INT AUTO_INCREMENT PRIMARY KEY,
+    bill_Id INT NOT NULL,
+    payment_date DATE NOT NULL,
+    amount_paid DECIMAL(10,2) NOT NULL CHECK (amount_paid >= 0),
+    FOREIGN KEY (bill_Id) REFERENCES Bill(billId) ON DELETE CASCADE
+);
+
+ALTER TABLE Payment AUTO_INCREMENT = 500;
+INSERT INTO Payment (bill_Id, payment_date, amount_paid) VALUES
+(401, '2025-02-06', 480.00),
+(404, '2025-02-09', 620.00),
+(407, '2025-02-12', 250.00),
+(409, '2025-02-14', 850.00),
+(412, '2025-02-17', 330.00);
+
+
+
+
+
+
+select meterId from electricityusage where usage_units >=200;
+
+
+
