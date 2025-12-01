@@ -1,12 +1,13 @@
 package com.java.tax_calculation;
 
-public class Vechile {
+public class Vechile implements TaxPayement {
 	private int registrationNumber;
 	private String brandName;
 	private double cost;
 	private int maxVelocity;
 	private int capacity;
 	private FuelType fuelType;
+	private double tax;
 
 	public Vechile() {
 
@@ -21,6 +22,7 @@ public class Vechile {
 		this.maxVelocity = maxVelocity;
 		this.capacity = capacity;
 		this.fuelType = fuelType;
+		this.tax = this.calculateTax();
 	}
 
 	public int getRegistrationNumber() {
@@ -74,7 +76,23 @@ public class Vechile {
 	@Override
 	public String toString() {
 		return "Vechile [registrationNumber=" + registrationNumber + ", brandName=" + brandName + ", cost=" + cost
-				+ ", maxVelocity=" + maxVelocity + ", capacity=" + capacity + ", fuelType=" + fuelType + "]";
+				+ ", maxVelocity=" + maxVelocity + ", capacity=" + capacity + ", fuelType=" + fuelType + ", tax=" + tax
+				+ "]";
+	}
+
+	@Override
+	public double calculateTax() {
+		double tax = 0.0;
+		if (this.fuelType == FuelType.PETROL) {
+			tax = this.maxVelocity + this.capacity + (double) (0.10 * this.cost);
+		} else if (this.fuelType == FuelType.DIESEL) {
+			tax = this.maxVelocity + this.capacity + (double) (0.11 * this.cost);
+		} else {
+			if (this.fuelType == FuelType.PETROL) {
+				tax = this.maxVelocity + this.capacity + (double) (0.12 * this.cost);
+			}
+		}
+		return tax;
 	}
 
 }
