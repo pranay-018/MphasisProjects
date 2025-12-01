@@ -23,9 +23,10 @@ public class App {
 //			return;
 //		}
 		List<Property> properties = new ArrayList<Property>();
+		List<Vechile> vechiles = new ArrayList<Vechile>();
 		int option = 4;
 		do {
-			System.out.println("select the operations : ");
+			System.out.println("             select the operations : ");
 			displayOperationsMenu();
 			try {
 				option = sc.nextInt();
@@ -34,7 +35,7 @@ public class App {
 					propertyDetails(properties);
 					break;
 				case 2:
-					vechileDetails();
+					vechileDetails(vechiles);
 					break;
 				case 3:
 					getTotalTax();
@@ -99,7 +100,7 @@ public class App {
 					}
 					System.out.println("enter the property id to calculate tax");
 					int propertyid = sc.nextInt();
-					properties.get(propertyid);
+					System.out.println(properties.get(propertyid));
 					break;
 				case 3:
 					System.out.println("displaying properties");
@@ -123,7 +124,7 @@ public class App {
 	}
 
 	private static Property addProperty() {
-		System.out.println(" Enter the property details : ".toUpperCase());
+		System.out.println("Enter the property details : ".toUpperCase());
 		try {
 			Scanner sc = new Scanner(System.in);
 			System.out.print("Enter the base value of the property : ");
@@ -138,10 +139,12 @@ public class App {
 			int age = sc.nextInt();
 			if (area <= 0)
 				throw new InValidException("area must be greater than 0");
-			System.out.print("Is Land loacted in city ? (Y: yes, N: No");
-			String city = sc.nextLine().toLowerCase();
+			System.out.print("Is Land located in city ? (Y: yes, N: No) : ");
+			Scanner sc2 = new Scanner(System.in);
+			String city = sc2.nextLine().toLowerCase();
 			char inCity = city.charAt(0);
-			if (inCity != 'y' || inCity != 'n') {
+
+			if (inCity != 'y' && inCity != 'n') {
 				throw new InValidException("invalid option");
 			}
 			boolean isInCity = inCity == 'y' ? true : false;
@@ -155,7 +158,7 @@ public class App {
 		}
 	}
 
-	public static void vechileDetails() {
+	public static void vechileDetails(List<Vechile> vechiles) {
 		Scanner sc = new Scanner(System.in);
 		int option = 0;
 		do {
@@ -164,7 +167,10 @@ public class App {
 				option = sc.nextInt();
 				switch (option) {
 				case 1:
-					System.out.println("vechile is adding");
+					Vechile vechile = addVechile();
+					if (vechile != null) {
+						vechiles.add(vechile);
+					}
 					break;
 				case 2:
 					System.out.println("calculating vechile tax");
@@ -185,6 +191,49 @@ public class App {
 				continue;
 			}
 		} while (option != 4);
+	}
+
+	private static Vechile addVechile() {
+		System.out.println("Enter the Vechile details : ".toUpperCase());
+		try {
+			Scanner sc = new Scanner(System.in);
+			System.out.print("Enter the 4 digit Registration Number  : ");
+			String regNo = sc.nextLine().trim();
+
+			if (!regNo.matches("\\d{4}")) {
+				throw new InValidException("Registration number must be 4 digits.");
+			}
+
+			if (regNo.equals("0000")) {
+				throw new InValidException("Registration number cannot be 0000.");
+			}
+			int registrationNumber = Integer.parseInt(regNo);
+
+			System.out.print("Enter the Brand of Vechile: ");
+			String brand = sc.nextLine();
+			if (brand == null)
+				throw new InValidException("please enter the valid brand Name");
+			System.out.print("Enter the cost of vechile : ");
+			int cost = sc.nextInt();
+			if (cost <= 0 || cost < 50000 || cost > 10000000)
+				throw new InValidException("Invalid");
+			System.out.print("Enter the maximum velocity of vechile : ");
+			int maxVelocity = sc.nextInt();
+			if (maxVelocity <= 0 || maxVelocity < 120 || maxVelocity > 300)
+				throw new InValidException("Invalid speed");
+			System.out.print("Enter the capacity  vechile : ");
+			int capacity = sc.nextInt();
+			if (capacity <2 || capacity>50)
+				throw new InValidException("Invalid Thread");
+
+//			return new Vechile(registrationNumber, baseValue, age, isInCity);
+		} catch (InputMismatchException inputMismatchException) {
+			System.out.println("Invalid data , please enter the valid format data");
+			return null;
+		} catch (InValidException invalidException) {
+			System.out.println(invalidException.getMessage());
+			return null;
+		}
 	}
 
 	public static void getTotalTax() {
