@@ -59,10 +59,12 @@ public class Property implements TaxPayement {
 		this.isInCity = isInCity;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "Property [builtUpArea=" + builtUpArea + ", landBaseValue=" + landBaseValue + ", landAge=" + landAge
-				+ ", isInCity=" + isInCity + "]";
+		return "Property [propertyID=" + propertyID + ", builtUpArea=" + builtUpArea + ", landBaseValue="
+				+ landBaseValue + ", landAge=" + landAge + ", isInCity=" + isInCity + ", tax=" + tax + "]";
 	}
 
 	@Override
