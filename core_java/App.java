@@ -174,6 +174,10 @@ public class App {
 					break;
 				case 2:
 					System.out.println("calculating vechile tax");
+					System.out.println("displaying properties");
+					for (Vechile v : vechiles) {
+						System.out.println(v);
+					}
 					break;
 				case 3:
 					System.out.println("vechile properties");
@@ -223,10 +227,30 @@ public class App {
 				throw new InValidException("Invalid speed");
 			System.out.print("Enter the capacity  vechile : ");
 			int capacity = sc.nextInt();
-			if (capacity <2 || capacity>50)
+			if (capacity < 2 || capacity > 50)
 				throw new InValidException("Invalid Thread");
+			System.out.println("Choose the type of fuel : ");
+			System.out.println("1.PETROL DRIVEN");
+			System.out.println("DEISEL DRIVEN");
+			System.out.println("CNG/LPG Driven");
+			int option = 0;
+			FuelType fuelType;
+			switch (option) {
+			case 1:
+				fuelType = FuelType.PETROL;
+				break;
+			case 2:
+				fuelType = FuelType.PETROL;
+				break;
+			case 3:
+				fuelType = FuelType.PETROL;
+				break;
 
-//			return new Vechile(registrationNumber, baseValue, age, isInCity);
+			default:
+				throw new InValidException("please select the apropriate option : ");
+
+			}
+			return new Vechile(registrationNumber, brand, cost, maxVelocity, capacity, fuelType);
 		} catch (InputMismatchException inputMismatchException) {
 			System.out.println("Invalid data , please enter the valid format data");
 			return null;
