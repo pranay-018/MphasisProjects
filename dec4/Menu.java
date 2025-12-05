@@ -1,4 +1,4 @@
-package com.java.tax_calculation;
+package com.project.tax_calculation;
 
 public class Menu {
 
@@ -7,7 +7,7 @@ public class Menu {
 	}
 
 	public static void displayOperationsMenu() {
-		System.out.println("select the operations : ");
+		System.out.println("select the option : ");
 		System.out.println("1.Property tax".toUpperCase());
 		System.out.println("2.Vechicle tax".toUpperCase());
 		System.out.println("3.total tax".toUpperCase());
@@ -15,7 +15,7 @@ public class Menu {
 	}
 
 	public static void displayPropertyOptions() {
-		System.out.println("enter the option");
+		System.out.println("enter the required option");
 		System.out.println("1.add property details".toUpperCase());
 		System.out.println("2.calculate property tax".toUpperCase());
 		System.out.println("3.display all property's tax".toUpperCase());
@@ -24,7 +24,7 @@ public class Menu {
 	}
 
 	public static void displayVechileOptions() {
-		System.out.println("enter the option");
+		System.out.println("enter the required option");
 		System.out.println("1.add vechile details".toUpperCase());
 		System.out.println("2.calculate vechile tax".toUpperCase());
 		System.out.println("3.display all vechile's tax".toUpperCase());
