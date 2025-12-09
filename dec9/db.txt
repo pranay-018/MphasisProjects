@@ -1,0 +1,74 @@
+
+create database online_quiz;
+use online_quiz;
+
+CREATE TABLE admin (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL, 
+    name VARCHAR(100)
+);
+
+
+alter table admin auto_increment = 100;
+
+insert into admin (username , password ,name ) values ('pranay','pranay@18','pranay reddy');
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL
+);
+
+alter table users  auto_increment = 200;
+
+
+CREATE TABLE questions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    question_text VARCHAR(500) NOT NULL,
+    option_a VARCHAR(200) NOT NULL,
+    option_b VARCHAR(200) NOT NULL,
+    option_c VARCHAR(200) NOT NULL,
+    option_d VARCHAR(200) NOT NULL,
+    correct_option CHAR(1) NOT NULL  
+);
+
+alter table questions  auto_increment = 300;
+
+
+
+	CREATE TABLE quiz (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		name VARCHAR(100) NOT NULL
+	);
+
+alter table quiz  auto_increment = 400;
+
+
+CREATE TABLE quiz_questions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    quiz_id INT NOT NULL,
+    question_id INT NOT NULL,
+    FOREIGN KEY (quiz_id) REFERENCES quiz(id),
+    FOREIGN KEY (question_id) REFERENCES questions(id)
+);
+
+alter table quiz_questions  auto_increment = 500;
+
+
+CREATE TABLE user_quiz_score (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    quiz_id INT NOT NULL,
+    score INT NOT NULL,
+    total_questions INT NOT NULL,
+    attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (quiz_id) REFERENCES quiz(id)
+);
+
+alter table user_quiz_score  auto_increment = 600;
+
+
+select * from questions;
